@@ -1,6 +1,9 @@
 package b_basic;
 
 public class Armut implements Meyva{
+    public Armut() {
+    }
+
     @Override
     public void sat() {
         System.out.println("armut sat");
@@ -10,6 +13,12 @@ public class Armut implements Meyva{
     public String getname() {
         return "Armut";
     }
+
+    @Override
+    public Class getType() {
+        return Meyva.class;
+    }
+
 
     @Override
     public int prıce() {

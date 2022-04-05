@@ -49,6 +49,18 @@ public class Execise_1 {
 
         UrunOzellıklerı<Sebze> fasulyeOzellik= new UrunOzellıklerı<>(1,s1,10.5);
 
+        int count=0;
+        for(Urun u:kasa.list){
+            if(u.getType().isAssignableFrom(Meyva.class)){
+                count++;
+            }
+        }
+        System.out.println("elma :"+count);
+
+
+
+
+
         System.out.println(kasa.get(0).prıce());
 
         karakterSayısı<String,Integer> karakterSayısıbul=new karakterSayısı<>("Abdullah");

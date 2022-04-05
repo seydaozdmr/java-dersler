@@ -1,6 +1,12 @@
 package b_basic;
 
 public class Elma implements Meyva{
+    Class myClass;
+
+    public Elma() {
+        myClass=Meyva.class;
+
+    }
 
     @Override
     public void sat() {
@@ -13,6 +19,11 @@ public class Elma implements Meyva{
     }
 
     @Override
+    public Class getType() {
+        return this.myClass;
+    }
+
+    @Override
     public int prıce() {
         return 5;
     }
@@ -21,4 +32,6 @@ public class Elma implements Meyva{
     public void urununAdiYaz() {
         System.out.println("elma");
     }
+
+
 }

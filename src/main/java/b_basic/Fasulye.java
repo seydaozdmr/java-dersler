@@ -17,6 +17,11 @@ public class Fasulye implements Sebze{
     }
 
     @Override
+    public Class getType() {
+        return Fasulye.class;
+    }
+
+    @Override
     public int dayaniklilikSuresi() {
         return 10;
     }
