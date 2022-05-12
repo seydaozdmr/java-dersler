@@ -31,6 +31,8 @@ public abstract class PetDomainForKata {
 
     public Person getPersonNamed(String fullName)
     {
-        return this.people.stream().filter(e->e.getFirstName().equals(fullName)).findAny().orElseThrow(()->new NoSuchElementException("aradığınız kişi bulunamıştır. "));
+        return this.people.stream()
+                .filter(e->e.getFirstName().equals(fullName))
+                .findAny().orElseThrow(()->new NoSuchElementException("aradığınız kişi bulunamıştır. "));
     }
 }

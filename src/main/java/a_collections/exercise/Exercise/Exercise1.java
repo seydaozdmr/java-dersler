@@ -16,7 +16,10 @@ public class Exercise1 extends PetDomainForKata{
     {
         // Replace null, with a transformation method on List.
         //List<String> firstNames = this.people.stream().map(Person::getFirstName).collect(Collectors.toList()); // this.people...
-        List<String> firstNames =null;
+        List<String> firstNames =this.people.stream()
+                .map(e-> e.getFirstName())
+                .collect(Collectors.toList()); //Burası sizin yapmanız gereken yer
+
         var expectedFirstNames = List.of("Mary", "Bob", "Ted", "Jake", "Barry", "Terry", "Harry", "John");
         Assertions.assertEquals(expectedFirstNames, firstNames);
     }
@@ -49,9 +52,7 @@ public class Exercise1 extends PetDomainForKata{
     public void getPeopleWithoutCats()
     {
         // Replace null, with a negative filtering method on List.
-        List<Person> peopleWithoutCats = this.people.stream()
-                                                        .filter(e->!e.hasPet(PetType.CAT))
-                                                        .collect(Collectors.toList());  // this.people...
+        List<Person> peopleWithoutCats = null; // this.people...
 
         Assertions.assertEquals(6,peopleWithoutCats.size());
     }

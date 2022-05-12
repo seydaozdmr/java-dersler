@@ -40,8 +40,8 @@ public class Stream_ornek4 {
 
         //TODO 25000'den büyük olan ilk product
         Product c=productsList.stream()
-                .filter(e->e.getPrice()>25000)
-                .findFirst().get();
+                .filter(e->e.getPrice()>100000)
+                .findFirst().get();//.orElseThrow(()-> new PriceFilterException("ürün bulunamamıstır"));
         System.out.println(c);
 
 

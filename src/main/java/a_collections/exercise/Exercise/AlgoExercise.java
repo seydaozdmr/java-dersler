@@ -13,7 +13,7 @@ public class AlgoExercise {
         return null;
     }
 
-    //2.Finding the first non-repeated character
+    //2.Finding the first non-repeated character aaabbcc-a-bababcdaabb
     private static char firstNonRepeated(String s){
         return 'a';
     }
