@@ -28,13 +28,16 @@ public class Exercise1 extends PetDomainForKata{
     @Tag("KATA")
     public void getNamesOfMarySmithsPets()
     {
-        Person person = this.getPersonNamed("Mary Smith");
-        List<Pet> pets = person.getPets();
+//        Person person = this.getPersonNamed("Mary Smith");
+//        List<Pet> pets = person.getPets();
 
         // Replace null, with a transformation method on List.
-        List<String> names = null; // pets...
+        List<String> names = getPersonNamed("Mary").getPets().stream()
+                .map(Pet::getName)
+                .collect(Collectors.toList());
 
-        Assertions.assertEquals("Tabby", names.toString());
+
+        Assertions.assertEquals("[Tabby]", names.toString());
     }
 
     @Test
@@ -42,7 +45,8 @@ public class Exercise1 extends PetDomainForKata{
     public void getPeopleWithCats()
     {
         // Replace null, with a positive filtering method on List.
-        List<Person> peopleWithCats = null;  // this.people...
+        List<Person> peopleWithCats = people.stream()
+                .filter(e ->e.hasPet(PetType.CAT)).collect(Collectors.toList());
 
         Assertions.assertEquals(2,peopleWithCats.size());
     }
@@ -52,7 +56,8 @@ public class Exercise1 extends PetDomainForKata{
     public void getPeopleWithoutCats()
     {
         // Replace null, with a negative filtering method on List.
-        List<Person> peopleWithoutCats = null; // this.people...
+        List<Person> peopleWithoutCats = people.stream()
+                .filter(e ->!e.hasPet(PetType.CAT)).collect(Collectors.toList());
 
         Assertions.assertEquals(6,peopleWithoutCats.size());
     }
