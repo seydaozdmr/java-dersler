@@ -26,7 +26,7 @@ public class ByteStreamStringArray {
                 for (int j=0; j<result[i].length();j++){
                     ou.write(result[i].charAt(j));
                 }
-                if(i==1)
+                if(i==result.length-1) //TODO burada 1 hard code yapmak yerine dinamik yap
                     break;
                 ou.write('-');
             }
