@@ -17,9 +17,7 @@ public class Exercise1 extends PetDomainForKata{
     {
         // Replace null, with a transformation method on List.
         //List<String> firstNames = this.people.stream().map(Person::getFirstName).collect(Collectors.toList()); // this.people...
-        List<String> firstNames = this.people.stream()
-                .map(e-> e.getFirstName())
-                .collect(Collectors.toList()); //Burası sizin yapmanız gereken yer
+        List<String> firstNames =null;  //Burası sizin yapmanız gereken yer
 
         var expectedFirstNames = List.of("Mary", "Bob", "Ted", "Jake", "Barry", "Terry", "Harry", "John");
         Assertions.assertEquals(expectedFirstNames, firstNames);
@@ -33,9 +31,7 @@ public class Exercise1 extends PetDomainForKata{
 //        List<Pet> pets = person.getPets();
 
         // Replace null, with a transformation method on List.
-        List<String> names = getPersonNamed("Mary").getPets().stream()
-                .map(Pet::getName)
-                .collect(Collectors.toList());
+        List<String> names =null;
 
 
         Assertions.assertEquals("[Tabby]", names.toString());
@@ -46,8 +42,7 @@ public class Exercise1 extends PetDomainForKata{
     public void getPeopleWithCats()
     {
         // Replace null, with a positive filtering method on List.
-        List<Person> peopleWithCats = people.stream()
-                .filter(e ->e.hasPet(PetType.CAT)).collect(Collectors.toList());
+        List<Person> peopleWithCats = null;
 
         Assertions.assertEquals(2,peopleWithCats.size());
     }
@@ -57,8 +52,7 @@ public class Exercise1 extends PetDomainForKata{
     public void getPeopleWithoutCats()
     {
         // Replace null, with a negative filtering method on List.
-        List<Person> peopleWithoutCats = people.stream()
-                .filter(e ->!e.hasPet(PetType.CAT)).collect(Collectors.toList());
+        List<Person> peopleWithoutCats = null;
 
         Assertions.assertEquals(6,peopleWithoutCats.size());
     }
