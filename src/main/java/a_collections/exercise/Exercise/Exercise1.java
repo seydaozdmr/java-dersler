@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Exercise1 extends PetDomainForKata{
+
     @Test
     public void getFirstNamesOfAllPeople()
     {
         // Replace null, with a transformation method on List.
         //List<String> firstNames = this.people.stream().map(Person::getFirstName).collect(Collectors.toList()); // this.people...
-        List<String> firstNames =this.people.stream()
+        List<String> firstNames = this.people.stream()
                 .map(e-> e.getFirstName())
                 .collect(Collectors.toList()); //Burası sizin yapmanız gereken yer
 
