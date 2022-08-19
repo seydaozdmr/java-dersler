@@ -16,7 +16,7 @@ public class TestClass {
         return value==null;
     }
     public static void main(String[] args) {
-        StringParameterChecker stringParameterChecker=String::isEmpty;
+        StringParameterChecker stringParameterChecker = String::isEmpty;
         System.out.println(stringParameterChecker.check("sad"));
 
         TestClass testClass=new TestClass();
