@@ -79,6 +79,7 @@ public class Exercise3 extends PetDomainForKata{
     {
         // Do you recognize this pattern?
         Map<PetType, Set<Person>> peopleByPetType = this.people.stream()
+                .filter(e->e.getPets().size()>0)
                                                                     .collect(Collectors
                                                                             .groupingBy(p->p.getPetTypes()
                                                                                     .stream()
