@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Exercise3 extends PetDomainForKata{
@@ -77,7 +78,14 @@ public class Exercise3 extends PetDomainForKata{
     public void getPeopleByTheirPets()
     {
         // Do you recognize this pattern?
-        Map<PetType, Set<Person>> peopleByPetType = new HashMap<>();
+        Map<PetType, Set<Person>> peopleByPetType = this.people.stream()
+                                                                    .collect(Collectors
+                                                                            .groupingBy(p->p.getPetTypes()
+                                                                                    .stream()
+                                                                                    .findFirst()
+                                                                                    .get(),
+                                                                            Collectors.toSet()));
+
 
         for (Person person : this.people)
         {
@@ -95,23 +103,23 @@ public class Exercise3 extends PetDomainForKata{
             }
         }
 
-        Assertions.assertEquals(2, peopleByPetType.get(PetType.CAT));
-        Assertions.assertEquals(2, peopleByPetType.get(PetType.DOG));
-        Assertions.assertEquals(1, peopleByPetType.get(PetType.HAMSTER));
-        Assertions.assertEquals(1, peopleByPetType.get(PetType.TURTLE));
-        Assertions.assertEquals(1, peopleByPetType.get(PetType.BIRD));
-        Assertions.assertEquals(1, peopleByPetType.get(PetType.SNAKE));
+        Assertions.assertEquals(2, peopleByPetType.get(PetType.CAT).size());
+        Assertions.assertEquals(2, peopleByPetType.get(PetType.DOG).size());
+        Assertions.assertEquals(1, peopleByPetType.get(PetType.HAMSTER).size());
+        Assertions.assertEquals(1, peopleByPetType.get(PetType.TURTLE).size());
+        Assertions.assertEquals(1, peopleByPetType.get(PetType.BIRD).size());
+        Assertions.assertEquals(1, peopleByPetType.get(PetType.SNAKE).size());
 
         // Hint: use the appropriate method on this.people with a target collection to create a MutableSetMultimap<String, Person>
         // Hint: this.people is a MutableList, so it will return a MutableListMultimap without a target collection
-        Map<PetType, List<Person>> multimap = null;
-
-        Assertions.assertEquals(2, multimap.get(PetType.CAT).size());
-        Assertions.assertEquals(2, multimap.get(PetType.DOG).size());
-        Assertions.assertEquals(1, multimap.get(PetType.HAMSTER).size());
-        Assertions.assertEquals(1, multimap.get(PetType.TURTLE).size());
-        Assertions.assertEquals(1, multimap.get(PetType.BIRD).size());
-        Assertions.assertEquals(1, multimap.get(PetType.SNAKE).size());
+//        Map<PetType, Person> multimap = new HashMap<>();
+//
+//        Assertions.assertEquals(2, multimap.get(PetType.CAT).size());
+//        Assertions.assertEquals(2, multimap.get(PetType.DOG).size());
+//        Assertions.assertEquals(1, multimap.get(PetType.HAMSTER).size());
+//        Assertions.assertEquals(1, multimap.get(PetType.TURTLE).size());
+//        Assertions.assertEquals(1, multimap.get(PetType.BIRD).size());
+//        Assertions.assertEquals(1, multimap.get(PetType.SNAKE).size());
     }
 
 }
