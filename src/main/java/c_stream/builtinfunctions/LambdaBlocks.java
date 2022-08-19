@@ -1,5 +1,7 @@
 package c_stream.builtinfunctions;
 
+import java.util.function.Predicate;
+
 public class LambdaBlocks {
     /**
      * Keep Your Lambdas Short
@@ -17,6 +19,22 @@ public class LambdaBlocks {
      * returnSame(a);
      * This simpler form can be further refactored to use a method reference:
      */
+    public static void main(String[] args) {
+    }
+    int field=100;
+
+     boolean testLengthGreaterThen100(int l){
+        int z=5;
+        Predicate<String> test=a->{
+             var name="asdasd";
+             int length = a.length();
+             length=field+10;
+             System.out.println(l);
+             return length>100;
+         };
+
+         return test.test("ali");
+    }
 
     /**
      * TABLE 8.8 Rules for accessing a variable from a lambda body inside a method

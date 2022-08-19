@@ -7,7 +7,8 @@ public class PredicateExample {
     public static void main(String[] args) {
         String test="ankara";
         Predicate<String> testWhetherEmptyOrNot=String::isEmpty;
-        testWhetherEmptyOrNot.test(test);
+        testWhetherEmptyOrNot.test("Ankara");
+
         Predicate<String> adsad=test::startsWith;
 
         Predicate<String> combineIsEmptyAndStartsWith= adsad.and(testWhetherEmptyOrNot);
@@ -25,6 +26,7 @@ public class PredicateExample {
     private boolean test(String r){
         return r.isEmpty();
     }
+
     interface StringChecker {
         boolean check();
     }

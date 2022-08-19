@@ -1,6 +1,8 @@
 package c_stream.builtinfunctions;
 
+import java.util.function.BiFunction;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class UnaryAndBinary {

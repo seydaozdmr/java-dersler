@@ -10,7 +10,9 @@ import java.util.function.Consumer;
 public class ConsumerExample {
     public static void main(String[] args) {
         List<String> elem=new ArrayList<>();
+
         Consumer<String> addElement=elem::add;
+
         addElement.accept("ankara");
         addElement.accept("izmir");
         //parametre alan ve void olan tüm methodlarda kullanılabilir

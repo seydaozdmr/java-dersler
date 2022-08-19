@@ -1,10 +1,11 @@
 package c_stream.builtinfunctions.primitives;
 
+import java.util.function.IntToDoubleFunction;
 import java.util.function.ToDoubleBiFunction;
 
 public class ToDoubleBiFunctionExample {
     public static void main(String[] args) {
-        ToDoubleBiFunction< String,Integer> test=(a,b)-> (double)a.length()* (double)b;
+        ToDoubleBiFunction<String,Integer> test=(a,b)-> (double)a.length()* (double)b;
 
 
 /**
