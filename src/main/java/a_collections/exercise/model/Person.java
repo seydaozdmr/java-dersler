@@ -56,4 +56,13 @@ public class Person
     {
         return !this.pets.isEmpty();
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", pets=" + pets +
+                '}';
+    }
 }

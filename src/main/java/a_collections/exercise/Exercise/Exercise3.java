@@ -86,6 +86,28 @@ public class Exercise3 extends PetDomainForKata{
                                                                                     .findFirst()
                                                                                     .get(),
                                                                             Collectors.toSet()));
+        Map<PetType, Set<Person>> peopleByPetType3 = this.people.stream()
+                                                                    .filter(e->e.getPets().size()>0)
+                                                                    .collect(Collectors
+                                                                            .groupingBy(p->p.getPetTypes()
+                                                                                            .stream()
+                                                                                            .findFirst()
+                                                                                            .get(),
+                                                                                    Collectors.mapping(e->e,Collectors.toSet())));
+        System.out.println(peopleByPetType3);
+
+
+
+
+        //hangi tipten hayvanların listesi
+        Map<PetType, Set<Pet>> peopleByPetType2 = this.people.stream()
+                                                                .filter(e->e.getPets().size()>0)
+                                                                .flatMap(e->e.getPets().stream())
+                                                                .collect(Collectors
+                                                                    .groupingBy(Pet::getType, Collectors.toSet()));
+        //System.out.println(peopleByPetType);
+        //System.out.println(peopleByPetType2);
+
 
 
         for (Person person : this.people)
