@@ -1,10 +1,10 @@
 package c_stream.app.test;
 
-import c_stream.app.model.Category;
-import c_stream.app.model.Company;
-import c_stream.app.model.ProducedCountry;
+import c_stream.app.model.*;
 import c_stream.app.service.ProductService;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 public class TestController {
@@ -25,7 +25,9 @@ public class TestController {
 //        testController.printCounties();
         System.out.println(testController.printCountiesCounting());
         System.out.println(testController.printCompaniesAveraging());
-
+        System.out.println(testController.getNamesOfProductsNamesByExpirationDate(LocalDate.of(2023,07,10)));
+        testController.ingredientListMap().forEach((k,v)-> System.out.println(k.getName()+" : "+
+                v.stream().map(Product::getName).reduce("",(a,b)->a+" "+b)));
     }
 
     public boolean productAndCategory(){
@@ -44,5 +46,11 @@ public class TestController {
         return productService.findProductsByAveraging();
     }
 
+    public Map<Boolean, String> getNamesOfProductsNamesByExpirationDate(LocalDate localDate){
+        return productService.findProductsByExpirationDate(localDate);
+    }
+    public Map<Ingredient,List<Product>> ingredientListMap(){
+        return productService.distinctIngredientOfProducts();
+    }
 
 }

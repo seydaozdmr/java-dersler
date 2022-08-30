@@ -1,18 +1,28 @@
 package c_stream.app.service;
 
-import c_stream.app.model.Category;
-import c_stream.app.model.Company;
-import c_stream.app.model.ProducedCountry;
-import c_stream.app.model.Product;
+import c_stream.app.model.*;
 import c_stream.app.repository.ProductRepository;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProductService {
     private ProductRepository productRepository = new ProductRepository();
+
+    public List<Product> findAllProducts(){
+        return new ArrayList<>(productRepository.getProducts());
+    }
+
+    public Product findProduct(String name){
+        return productRepository.getProducts().stream()
+                .filter(name::equals)
+                .findFirst()
+                .orElseThrow(()->new NoSuchElementException("aranan eleman bulunamadı"));
+    }
+
+
 
     public List<String> findNamesOfAllProducts(){
         return productRepository.getProducts().stream()
@@ -94,8 +104,29 @@ public class ProductService {
                 .collect(Collectors.groupingBy(Product::getCompany,Collectors.averagingDouble(e->e.getPrice().doubleValue())));
     }
 
+    public Map<Ingredient,List<Product>> distinctIngredientOfProducts(){
+        return productRepository.getProducts().stream()
+                .collect(
+                        HashMap::new,
+                        (Map<Ingredient, List<Product>> map, Product next) -> next.getIngredients()
+                                .forEach(i -> map.computeIfAbsent(i, k -> new ArrayList<>()).add(next)),
+                        (left, right) -> right.forEach((i, prods) ->
+                                left.merge(i, prods, (oldV, newV) -> {
+                                    oldV.addAll(newV);
+                                    return oldV;
+                                }))
+                );
+    }
 
-    //1- son kullanma tarihi partitioningBy
+    public Map<Boolean,String> findProductsByExpirationDate(LocalDate localDate) {
+        return productRepository.getProducts().stream()
+                .collect(Collectors
+                        .partitioningBy(e->e.getExpirationDate().compareTo(localDate)<0,
+                              Collectors.mapping(Product::getName,Collectors.joining(","))));
+    }
+
+
+    //1- son kullanma tarihi partitioningBy -> names joining ,
     //2- malzemelerin olduğu ürünlerin map olarak bulunması
     //3- Collectors.mapping
     //4- Collectors.toMap
