@@ -78,36 +78,16 @@ public class Exercise3 extends PetDomainForKata{
     public void getPeopleByTheirPets()
     {
         // Do you recognize this pattern?
-        Map<PetType, Set<Person>> peopleByPetType = this.people.stream()
-                .filter(e->e.getPets().size()>0)
-                                                                    .collect(Collectors
-                                                                            .groupingBy(p->p.getPetTypes()
-                                                                                    .stream()
-                                                                                    .findFirst()
-                                                                                    .get(),
-                                                                            Collectors.toSet()));
-        Map<PetType, Set<Person>> peopleByPetType3 = this.people.stream()
-                                                                    .filter(e->e.getPets().size()>0)
-                                                                    .collect(Collectors
-                                                                            .groupingBy(p->p.getPetTypes()
-                                                                                            .stream()
-                                                                                            .findFirst()
-                                                                                            .get(),
-                                                                                    Collectors.mapping(e->e,Collectors.toSet())));
-        System.out.println(peopleByPetType3);
+        Map<PetType, List<Person>> peopleByPetType = this.people.stream()
+                                                    .filter(e->e.getPets().size()>0).collect(HashMap::new,
 
+                                                            (Map<PetType,List<Person>> map,Person p)-> p.getPets()
+                                                                    .forEach(i-> map.computeIfAbsent(i.getType(), k-> new ArrayList<>()).add(p)),
 
-
-
-        //hangi tipten hayvanların listesi
-        Map<PetType, Set<Pet>> peopleByPetType2 = this.people.stream()
-                                                                .filter(e->e.getPets().size()>0)
-                                                                .flatMap(e->e.getPets().stream())
-                                                                .collect(Collectors
-                                                                    .groupingBy(Pet::getType, Collectors.toSet()));
-        //System.out.println(peopleByPetType);
-        //System.out.println(peopleByPetType2);
-
+                                                            (left,right)-> right.forEach((petTypes,person)->
+                                                                    left.merge(petTypes,person,(oldV, newV) -> {
+                                                                        oldV.addAll(newV);
+                                                                        return oldV;})));
 
 
         for (Person person : this.people)
@@ -116,10 +96,10 @@ public class Exercise3 extends PetDomainForKata{
             for (Pet pet : pets)
             {
                 PetType petType = pet.getType();
-                Set<Person> peopleWithPetType = peopleByPetType.get(petType);
+                List<Person> peopleWithPetType = peopleByPetType.get(petType);
                 if (peopleWithPetType == null)
                 {
-                    peopleWithPetType = new HashSet<>();
+                    peopleWithPetType = new ArrayList<>();
                     peopleByPetType.put(petType, peopleWithPetType);
                 }
                 peopleWithPetType.add(person);

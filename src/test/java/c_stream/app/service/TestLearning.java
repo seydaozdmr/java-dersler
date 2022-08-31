@@ -11,13 +11,14 @@ import java.util.logging.Logger;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestLearning {
-    private static Logger logger = Logger.getAnonymousLogger();
+
+    private static Logger logger ;
     private static List<String> list;
 
     @BeforeEach
     void setUp() {
         logger.info("test başlıyor.");
-//        list = new ArrayList<>(Arrays.asList("ankara","izmir"));
+        list = new ArrayList<>(Arrays.asList("ankara","izmir"));
     }
 
 //    @AfterEach
@@ -26,16 +27,18 @@ public class TestLearning {
 //        logger.info("test sonlanıyor");
 //        list.clear();
 //    }
+
     @BeforeAll
     public static void setup() {
-        list = new ArrayList<>(Arrays.asList("ankara","izmir"));
+        logger = Logger.getAnonymousLogger();
+        //list = new ArrayList<>(Arrays.asList("ankara","izmir"));
         logger.info("startup - creating DB connection");
     }
-
-    @AfterAll
-    public static void tearDown2() {
-        logger.info("closing DB connection");
-    }
+//
+//    @AfterAll
+//    public static void tearDown2() {
+//        logger.info("closing DB connection");
+//    }
 
     @Test
     public void simpleTest() {
@@ -50,7 +53,7 @@ public class TestLearning {
     @Test
     public void whenCheckingListSize_thenSizeEqualsToInit() {
         logger.info("eleman ekleniyor");
-        assertEquals(3, list.size());
+        assertEquals(2, list.size());
 
         list.add("another test-1");
 //        assertEquals(3, list.size());

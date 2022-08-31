@@ -108,8 +108,10 @@ public class ProductService {
         return productRepository.getProducts().stream()
                 .collect(
                         HashMap::new,
+
                         (Map<Ingredient, List<Product>> map, Product next) -> next.getIngredients()
                                 .forEach(i -> map.computeIfAbsent(i, k -> new ArrayList<>()).add(next)),
+
                         (left, right) -> right.forEach((i, prods) ->
                                 left.merge(i, prods, (oldV, newV) -> {
                                     oldV.addAll(newV);
@@ -125,11 +127,37 @@ public class ProductService {
                               Collectors.mapping(Product::getName,Collectors.joining(","))));
     }
 
+    public Map<String,Integer> findProductsByNameAndExpirationDate(){
+        return productRepository.getProducts().stream()
+                .sorted(Comparator.comparing(Product::getExpirationDate))
+                .collect(Collectors.toMap(e->e.getName().toUpperCase(Locale.ROOT),e->e.getExpirationDate().getYear()));
+    }
+
+    public List<Product> getProductsByExpirationDateUnder2022(){
+        return productRepository.getProducts().stream()
+                .filter(e->e.getExpirationDate().isBefore(LocalDate.of(2023,01,01)))
+                .sorted(Comparator.comparing(Product::getExpirationDate).thenComparing(Product::getPrice).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public Map<String,Double> getProductsAveragePrice(){
+        return productRepository.getProducts().stream()
+                .collect(Collectors.groupingBy(Product::getName ,Collectors.averagingDouble(i->i.getPrice().doubleValue())));
+    }
+
+    public String getHighPricedProduct(){
+        return productRepository.getProducts().stream()
+                .max(Comparator.comparing(Product::getPrice))
+                .map(Product::getName)
+                .orElseThrow(()->new NoSuchElementException("aranan ürün bulunamadı"));
+    }
+
 
     //1- son kullanma tarihi partitioningBy -> names joining ,
     //2- malzemelerin olduğu ürünlerin map olarak bulunması
     //3- Collectors.mapping
     //4- Collectors.toMap
+    //5- sorting (Collectors.sorting)
 
 
 

@@ -3,8 +3,9 @@ package c_stream.app.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
-public class Product {
+public class Product implements Comparable<Product>{
     private String id;
     private BigDecimal price;
     private String name;
@@ -105,6 +106,19 @@ public class Product {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
     public String toString() {
         return "Product{" +
                 "id='" + id + '\'' +
@@ -116,5 +130,10 @@ public class Product {
                 ", producedCountry=" + producedCountry +
                 ", ingredients=" + ingredients +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        return this.id.compareTo(o.id);
     }
 }

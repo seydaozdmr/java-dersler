@@ -76,7 +76,7 @@ public class ProductRepository {
                 BigDecimal.valueOf(10.0),"Dan Kek", LocalDate.of(2022,12,30),ulker,wafer,
                 ProducedCountry.TURKEY,List.of(new Ingredient("Fındık"),new Ingredient("Şeker"),new Ingredient("Un"),new Ingredient("Kabartma Tozu"))));
         products.add(new Product(UUID.randomUUID().toString(),
-                BigDecimal.valueOf(40.10),"Domestos", LocalDate.of(2024,10,30),johnAndJohns,cleaning,
+                BigDecimal.valueOf(55.0),"Domestos", LocalDate.of(2024,10,30),johnAndJohns,cleaning,
                 ProducedCountry.TURKEY,List.of(new Ingredient("Sodyum Hipoklorit"),new Ingredient("Sürfaktanlar"))));
         products.add(new Product(UUID.randomUUID().toString(),
                 BigDecimal.valueOf(20.20),"Cif", LocalDate.of(2025,10,30),johnAndJohns,cleaning,
@@ -86,6 +86,9 @@ public class ProductRepository {
                 ProducedCountry.UK,List.of(new Ingredient("Sodyum Perokside"),new Ingredient("Dimethicone"))));
         products.add(new Product(UUID.randomUUID().toString(),
                 BigDecimal.valueOf(55.0),"Çamaşır Deterjanı", LocalDate.of(2025,10,30),ulker,wafer,
+                ProducedCountry.FR,List.of(new Ingredient("Sodyum Perokside"),new Ingredient("Dimethicone"))));
+        products.add(new Product(UUID.randomUUID().toString(),
+                BigDecimal.valueOf(25.0),"Çamaşır Deterjanı", LocalDate.of(2025,10,30),ulker,wafer,
                 ProducedCountry.FR,List.of(new Ingredient("Sodyum Perokside"),new Ingredient("Dimethicone"))));
     }
 

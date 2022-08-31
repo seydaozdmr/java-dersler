@@ -20,14 +20,20 @@ public class TestController {
 
     public static void main(String[] args) {
         TestController testController=new TestController();
-        testController.printProducts();
-        System.out.println(testController.productAndCategory());
-//        testController.printCounties();
-        System.out.println(testController.printCountiesCounting());
-        System.out.println(testController.printCompaniesAveraging());
-        System.out.println(testController.getNamesOfProductsNamesByExpirationDate(LocalDate.of(2023,07,10)));
-        testController.ingredientListMap().forEach((k,v)-> System.out.println(k.getName()+" : "+
-                v.stream().map(Product::getName).reduce("",(a,b)->a+" "+b)));
+//        testController.printProducts();
+//        System.out.println(testController.productAndCategory());
+////        testController.printCounties();
+//        System.out.println(testController.printCountiesCounting());
+//        System.out.println(testController.printCompaniesAveraging());
+//        System.out.println(testController.getNamesOfProductsNamesByExpirationDate(LocalDate.of(2023,07,10)));
+//        testController.ingredientListMap().forEach((k,v)-> System.out.println(k.getName()+" : "+
+//                v.stream().map(Product::getName).reduce("",(a,b)->a+" "+b)));
+//        System.out.println(testController.getProductsByExpirationDate());
+//        System.out.println(testController.getProductsByExpirationDateUnder2022());
+
+        //System.out.println(testController.getProductsAveragePrice());
+        System.out.println(testController.getHighPricedProduct());
+
     }
 
     public boolean productAndCategory(){
@@ -51,6 +57,21 @@ public class TestController {
     }
     public Map<Ingredient,List<Product>> ingredientListMap(){
         return productService.distinctIngredientOfProducts();
+    }
+
+    public Map<String,Integer> getProductsByExpirationDate(){
+        return productService.findProductsByNameAndExpirationDate();
+    }
+
+    public List<Product> getProductsByExpirationDateUnder2022(){
+        return productService.getProductsByExpirationDateUnder2022();
+    }
+
+    public Map<String,Double> getProductsAveragePrice(){
+        return productService.getProductsAveragePrice();
+    }
+    public String getHighPricedProduct(){
+        return productService.getHighPricedProduct();
     }
 
 }
