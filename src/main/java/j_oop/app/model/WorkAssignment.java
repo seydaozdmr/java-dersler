@@ -16,4 +16,8 @@ public class WorkAssignment {
     public double getSqMeters(){
         return this.sqMeters;
     }
+
+    public Money estimateCompensations(){
+        return this.getPainter().estimateCompensation(this.getSqMeters());
+    }
 }

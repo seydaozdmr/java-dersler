@@ -40,11 +40,8 @@ public class CompositePainter implements Painter{
 
     @Override
     public Money estimateCompensation(double sqMeters) {
-        return this.estimateCompensation(sqMeters,this.estimateTotalVelocity(sqMeters));
-    }
-    private Money estimateCompensation(double sqMeters,Velocity totalVelocity){
-        return Painter.stream(this.painters)
-                .map(painter -> painter.estimateCompensation(sqMeters*painter.estimateVelocity(sqMeters).divideBy(totalVelocity)))
+        return this.schedule(sqMeters)
+                .map(WorkAssignment::estimateCompensations)
                 .reduce(Money::add)
                 .orElse(Money.ZERO);
     }
