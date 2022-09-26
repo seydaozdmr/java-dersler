@@ -1,5 +1,7 @@
 package c_stream.app.model;
 
+import c_stream.app.repository.ProductStream;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -135,5 +137,9 @@ public class Product implements Comparable<Product>{
     @Override
     public int compareTo(Product o) {
         return this.id.compareTo(o.id);
+    }
+
+    public static ProductStream stream(List<Product> products){
+        return new ProductStream(products.stream());
     }
 }

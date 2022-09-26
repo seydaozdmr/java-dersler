@@ -136,7 +136,15 @@ public class ProductService {
     public List<Product> getProductsByExpirationDateUnder2022(){
         return productRepository.getProducts().stream()
                 .filter(e->e.getExpirationDate().isBefore(LocalDate.of(2023,01,01)))
-                .sorted(Comparator.comparing(Product::getExpirationDate).thenComparing(Product::getPrice).reversed())
+                .sorted(Comparator.comparing(Product::getExpirationDate)
+                        .thenComparing(Product::getPrice).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getProductsByExpirationDateUnder20222(){
+        return Product.stream(productRepository.getProducts())
+                .getExpirationBefore2023()
+                .sortByExpirationDateThenPriceReversed()
                 .collect(Collectors.toList());
     }
 
@@ -151,6 +159,17 @@ public class ProductService {
                 .map(Product::getName)
                 .orElseThrow(()->new NoSuchElementException("aranan ürün bulunamadı"));
     }
+
+    public String getHighPricedProduct2(){
+        return Product.stream(productRepository.getProducts())
+                .getMaxProduct()
+                .map(Product::getName)
+                .orElse(null);
+    }
+
+
+
+
 
 
     //1- son kullanma tarihi partitioningBy -> names joining ,
