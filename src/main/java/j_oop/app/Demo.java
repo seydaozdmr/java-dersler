@@ -2,7 +2,9 @@ package j_oop.app;
 
 import j_oop.app.model.Money;
 import j_oop.app.model.Painter;
+import j_oop.app.model.Velocity;
 
+import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +29,19 @@ public class Demo {
         return painters.stream()
                 .filter(Painter::isAvailable)
                 .reduce(Money.ZERO,(acc,painter)->painter.estimateCompensation(sqMeters).add(acc),Money::add);
+    }
+
+    public void workTogether(double sqMeters,List<Painter> painters){
+        Velocity groupVelocity = Painter.stream(painters).available()
+                .map(e->e.estimateVelocity(sqMeters))
+                .reduce(Velocity::add)
+                .orElse(Velocity.ZERO);
+
+        Painter.stream(painters).available()
+                .forEach(painter -> {
+                    double partialSqMeters = sqMeters * painter.estimateVelocity(sqMeters).divideBy(groupVelocity);
+                    Money partialCost = painter.estimateCompensation(partialSqMeters);
+                    Duration partialTime = painter.estimateTimeToPaint(partialSqMeters);
+                });
     }
 }

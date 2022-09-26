@@ -14,4 +14,7 @@ public interface Painter {
     public static PainterStream stream(List<Painter> painters){
         return new PainterStream(painters.stream());
     }
+    default Velocity estimateVelocity(double sqMeters){
+        return new Velocity(sqMeters,this.estimateTimeToPaint(sqMeters));
+    }
 }
