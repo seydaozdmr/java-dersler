@@ -1,6 +1,7 @@
 package j_oop.app.model;
 
 import java.time.Duration;
+import java.util.Optional;
 
 public class ProportionalPainter implements Painter{
     private String name;
@@ -13,9 +14,10 @@ public class ProportionalPainter implements Painter{
         this.rate = rate;
     }
 
+
     @Override
-    public boolean isAvailable() {
-        return true;
+    public Optional<Painter> available() {
+        return Optional.of(this);
     }
 
     @Override

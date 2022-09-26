@@ -19,9 +19,14 @@ public class Demo {
                 new ProportionalPainter("Jack",1.19,this.perHour(16)));
     }
 
+    private List<Painter> createPainters2(){
+        return List.of(new ProportionalPainter("Koe",2.12,this.perHour(44)),
+                new ProportionalPainter("Jill",4.16,this.perHour(60)),
+                new CompressorPainter("Jeff",Duration.ofMinutes(12),19,Duration.ofMinutes(27),9,this.perHour(70)));
+    }
+
     private static Optional<Painter> findCheapest(double sqMeters, List<Painter> painters){
         return painters.stream()
-                .filter(Painter::isAvailable)
                 .min(Comparator.comparing(painter->painter.estimateCompensation(sqMeters)));
 //                .reduce((acc,current)->acc.estimateCompensation(sqMeters)
 //                        .compareTo(current.estimateCompensation(sqMeters))<=0 ? acc:current);
@@ -36,7 +41,6 @@ public class Demo {
 
     private static Money getTotalCost(double sqMeters,List<Painter> painters){
         return painters.stream()
-                .filter(Painter::isAvailable)
                 .reduce(Money.ZERO,(acc,painter)->painter.estimateCompensation(sqMeters).add(acc),Money::add);
     }
 
@@ -66,6 +70,21 @@ public class Demo {
     public static void main(String[] args) {
         Demo demo= new Demo();
         demo.workTogether(200,demo.createPainters());
+
+        System.out.println("***********");
+        List<Painter> painters = demo.createPainters();
+        Painter group1=CompositePainter.of(painters).get();
+
+        demo.print(group1,200);
+
+        System.out.println("*************");
+        List<Painter> painters1=demo.createPainters2();
+        demo.workTogether(200,painters1);
+
+        System.out.println("*************");
+        Painter group2=CompositePainter.of(painters1).get();
+        demo.print(group2,200);
+
     }
 
 
