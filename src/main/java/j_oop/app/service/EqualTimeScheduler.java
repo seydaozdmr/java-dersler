@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class EqualTimeScheduler implements PaintingScheduler{
     @Override
-    public Stream<WorkAssignment> schedule(List<Painter> painters, double sqMeters) {
+    public WorkStream schedule(List<Painter> painters, double sqMeters) {
         return this.getUpperDuration(painters,sqMeters)
                 .map(upper -> scheduleNonEmpty(painters,sqMeters,upper))
                 .orElse(WorkAssignment.stream(Stream.empty()));

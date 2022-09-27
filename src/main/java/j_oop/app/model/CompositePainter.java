@@ -3,6 +3,7 @@ package j_oop.app.model;
 import c_stream.basics.collector.PartitioningExample;
 import j_oop.app.service.ConstantVelocityScheduler;
 import j_oop.app.service.PaintingScheduler;
+import j_oop.app.service.WorkStream;
 
 import java.time.Duration;
 import java.util.List;
@@ -39,10 +40,14 @@ public class CompositePainter implements Painter{
 
     @Override
     public Money estimateCompensation(double sqMeters) {
-        return this.scheduler.schedule(this.painters,sqMeters)
+        return this.schedule(sqMeters)
                 .map(WorkAssignment::estimateCompensations)
                 .reduce(Money::add)
                 .orElse(Money.ZERO);
+    }
+
+    private WorkStream schedule(double sqMeters){
+        return this.scheduler.schedule(this.painters,sqMeters);
     }
 
     @Override

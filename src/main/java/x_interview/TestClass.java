@@ -18,6 +18,7 @@ public class TestClass {
         Collection<Project> myList= List.of(p1,p2,p3);
         System.out.println(findProjectWithLatestDate(myList));
 
+
         LocalDate localDate=LocalDate.of(2020,06,23);
         LocalDate localDate1=LocalDate.of(2020,01,02);
 
