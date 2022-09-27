@@ -28,6 +28,27 @@ public class CompressorPainter implements Painter{
     public String getName() { return this.name; }
 
     @Override
+    public double estimateSqMeters(Duration time) {
+        long cleaningSeconds = this.getCleaningSeconds();
+        long remainingSeconds = Math.max (time.getSeconds() - cleaningSeconds, 0);
+        double burstSeconds = 3600 - this.fillAfterSqMeters / this.sqMetersPerHour;
+        double fullBurstSeconds=burstSeconds + this.getFillSeconds();
+        long fullBursts = (long) (remainingSeconds / fullBurstSeconds);
+        double lastBurstSeconds = remainingSeconds - fullBursts * fullBurstSeconds;
+        double lastBurstPaintingSeconds = Math.max(lastBurstSeconds - getFillSeconds(),0);
+        double totalPaintingSeconds= fullBursts * burstSeconds + lastBurstPaintingSeconds;
+
+        return this.sqMetersPerHour * totalPaintingSeconds / 3600;
+    }
+    private long getFillSeconds(){
+        return this.fillTime.getSeconds();
+    }
+
+    private long getCleaningSeconds(){
+        return this.fillTime.getSeconds();
+    }
+
+    @Override
     public Velocity estimateVelocity(double sqMeters) {
         return Painter.super.estimateVelocity(sqMeters);
     }

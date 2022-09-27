@@ -1,6 +1,9 @@
 package j_oop.app.model;
 
+import j_oop.app.service.WorkStream;
+
 import java.time.Duration;
+import java.util.stream.Stream;
 
 public class WorkAssignment {
     private Painter painter;
@@ -18,5 +21,9 @@ public class WorkAssignment {
 
     public Duration estimateTimeToPaint(){
         return this.painter.estimateTimeToPaint(this.sqMeters);
+    }
+
+    public static WorkStream stream(Stream<WorkAssignment> assignments){
+        return new WorkStream(assignments);
     }
 }

@@ -11,6 +11,7 @@ public interface Painter {
     Duration estimateTimeToPaint(double sqMeters);
     Money estimateCompensation(double sqMeters);
     String getName();
+    double estimateSqMeters(Duration time);
 
     //factory method
     default WorkAssignment assign(double sqMeters){

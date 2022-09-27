@@ -2,10 +2,12 @@ package j_oop.app;
 
 import j_oop.app.model.*;
 import j_oop.app.service.ConstantVelocityScheduler;
+import j_oop.app.service.EqualTimeScheduler;
 import j_oop.app.utils.TimeUtils;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -74,7 +76,7 @@ public class Demo {
 
         System.out.println("***********");
         List<Painter> painters = demo.createPainters();
-        Painter group1=CompositePainter.of(painters,new ConstantVelocityScheduler()).get();
+        Painter group1=CompositePainter.of(painters,new EqualTimeScheduler()).get();
 
         demo.print(group1,200);
 
@@ -83,8 +85,17 @@ public class Demo {
         demo.workTogether(200,painters1);
 
         System.out.println("*************");
-        Painter group2=CompositePainter.of(painters1,new ConstantVelocityScheduler()).get();
+        Painter group2=CompositePainter.of(painters1,new EqualTimeScheduler()).get();
         demo.print(group2,200);
+
+        System.out.println("*************");
+
+        Optional<CompositePainter> group3 =
+                group2.available().map(group-> Arrays.asList(painters1.get(0),painters1.get(1),new CompressorPainter(
+                        "Jim",Duration.ofMinutes(9),14,Duration.ofMinutes(22),11,demo.perHour(90)
+                ),group))
+                        .flatMap(painters3->CompositePainter.of(painters3,new EqualTimeScheduler()));
+        group3.ifPresent(group->demo.print(group,200));
 
     }
 
