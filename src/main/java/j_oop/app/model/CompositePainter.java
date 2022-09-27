@@ -27,16 +27,11 @@ public class CompositePainter implements Painter{
 
     @Override
     public Duration estimateTimeToPaint(double sqMeters) {
-        return estimateTimeToPaint(sqMeters,estimateTotalVelocity(sqMeters));
-    }
-    private Duration estimateTimeToPaint(double sqMeters,Velocity totalVelocity){
-        return Painter.stream(this.painters)
-                .map(painter ->painter.estimateTimeToPaint(sqMeters *  painter.estimateVelocity(sqMeters).divideBy(totalVelocity)))
+        return this.schedule(sqMeters)
+                .map(WorkAssignment::estimateTimeToPaint)
                 .max(Duration::compareTo)
                 .get();
     }
-
-
 
     @Override
     public Money estimateCompensation(double sqMeters) {
@@ -56,6 +51,7 @@ public class CompositePainter implements Painter{
         return Painter.stream(this.painters).map(Painter::getName);
     }
 
+    //gives area of work each painter
     private Stream<WorkAssignment> schedule(double sqMeters){
         return this.schedule(sqMeters,this.estimateVelocity(sqMeters));
     }

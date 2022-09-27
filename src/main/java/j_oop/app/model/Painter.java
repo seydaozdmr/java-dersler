@@ -12,6 +12,7 @@ public interface Painter {
     Money estimateCompensation(double sqMeters);
     String getName();
 
+    //factory method
     default WorkAssignment assign(double sqMeters){
         return new WorkAssignment(this,sqMeters);
     }
