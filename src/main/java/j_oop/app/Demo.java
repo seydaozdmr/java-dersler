@@ -1,6 +1,7 @@
 package j_oop.app;
 
 import j_oop.app.model.*;
+import j_oop.app.service.ConstantVelocityScheduler;
 import j_oop.app.utils.TimeUtils;
 
 import java.math.BigDecimal;
@@ -73,7 +74,7 @@ public class Demo {
 
         System.out.println("***********");
         List<Painter> painters = demo.createPainters();
-        Painter group1=CompositePainter.of(painters).get();
+        Painter group1=CompositePainter.of(painters,new ConstantVelocityScheduler()).get();
 
         demo.print(group1,200);
 
@@ -82,7 +83,7 @@ public class Demo {
         demo.workTogether(200,painters1);
 
         System.out.println("*************");
-        Painter group2=CompositePainter.of(painters1).get();
+        Painter group2=CompositePainter.of(painters1,new ConstantVelocityScheduler()).get();
         demo.print(group2,200);
 
     }

@@ -1,6 +1,8 @@
 package j_oop.app.model;
 
 import c_stream.basics.collector.PartitioningExample;
+import j_oop.app.service.ConstantVelocityScheduler;
+import j_oop.app.service.PaintingScheduler;
 
 import java.time.Duration;
 import java.util.List;
@@ -11,23 +13,25 @@ import java.util.stream.Stream;
 
 public class CompositePainter implements Painter{
     private List<Painter> painters;
+    private PaintingScheduler scheduler;
 
-    private CompositePainter(List<Painter> painters) {
+    private CompositePainter(List<Painter> painters , PaintingScheduler scheduler) {
         this.painters = painters;
+        this.scheduler=scheduler;
     }
 
-    public static Optional<CompositePainter> of(List<Painter> painters){
-        return painters.isEmpty() ? Optional.empty() : Optional.of(new CompositePainter(painters));
+    public static Optional<CompositePainter> of(List<Painter> painters ,PaintingScheduler scheduler){
+        return painters.isEmpty() ? Optional.empty() : Optional.of(new CompositePainter(painters,scheduler));
     }
 
     public Optional<Painter> available(){
-        return CompositePainter.of(Painter.stream(painters).available().collect(Collectors.toList()))
+        return CompositePainter.of(Painter.stream(painters).available().collect(Collectors.toList()),new ConstantVelocityScheduler())
                 .map(Function.identity());
     }
 
     @Override
     public Duration estimateTimeToPaint(double sqMeters) {
-        return this.schedule(sqMeters)
+        return this.scheduler.schedule(this.painters,sqMeters)
                 .map(WorkAssignment::estimateTimeToPaint)
                 .max(Duration::compareTo)
                 .get();
@@ -35,7 +39,7 @@ public class CompositePainter implements Painter{
 
     @Override
     public Money estimateCompensation(double sqMeters) {
-        return this.schedule(sqMeters)
+        return this.scheduler.schedule(this.painters,sqMeters)
                 .map(WorkAssignment::estimateCompensations)
                 .reduce(Money::add)
                 .orElse(Money.ZERO);
@@ -52,18 +56,5 @@ public class CompositePainter implements Painter{
     }
 
     //gives area of work each painter
-    private Stream<WorkAssignment> schedule(double sqMeters){
-        return this.schedule(sqMeters,this.estimateVelocity(sqMeters));
-    }
 
-    private Stream<WorkAssignment> schedule(double sqMeters, Velocity totalVelocity){
-        return Painter.stream(this.painters)
-                .map(painter -> painter.assign(sqMeters*painter.estimateVelocity(sqMeters).divideBy(totalVelocity)));
-    }
-    private Velocity estimateTotalVelocity(double sqMeters){
-        return Painter.stream(this.painters)
-                .map(painter -> painter.estimateVelocity(sqMeters))
-                .reduce(Velocity::add)
-                .orElse(Velocity.ZERO);
-    }
 }
