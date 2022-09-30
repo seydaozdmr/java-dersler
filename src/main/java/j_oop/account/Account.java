@@ -1,51 +1,49 @@
 package j_oop.account;
 
+import j_oop.account.accountstates.Active;
+
 import java.math.BigDecimal;
 
 public class Account {
-    private boolean isVerified;
-    private boolean isClosed;
     private BigDecimal balance;
 
-    private Freezable freezable;
+    //this account class delegates all transactions to account states
+    private AccountState accountState;
 
 
 
     public Account(AccountUnFrozen onUnfrozen) {
         this.balance = BigDecimal.ZERO;
-        this.freezable = new FreezableActive(onUnfrozen);
+        this.accountState = new Active(onUnfrozen);
     }
 
     public void holderVerified(){
-        this.isVerified=true;
+        this.accountState = this.accountState.holderVerified();
     }
 
     public void closeAccount(){
-        this.isClosed=true;
+        this.accountState = this.accountState.closeAccount();
     }
 
     public void freezeAccount(){
-        if(this.isClosed)
-            return;
-        if(!this.isVerified)
-            return;
-        this.freezable.freezeAccount();
+        this.accountState =  this.accountState.freezeAccount();
     }
 
     public void deposit(BigDecimal amount){
-        if(this.isClosed)
-            return;
-        this.freezable = this.freezable.deposit();
+        this.accountState = this.accountState.deposit(amount, this::addToBalance);
+    }
+
+    private void addToBalance(BigDecimal amount){
         this.balance = this.balance.add(amount);
     }
 
+
     public void withdraw(BigDecimal amount){
-        if(!isVerified)
-            return;
-        if(this.isClosed)
-            return;
-        this.freezable = this.freezable.withdraw();
-        this.balance = this.balance.subtract(amount);
+        this.accountState = this.accountState.withdraw(amount,balance,this::subtractBalance);
+    }
+
+    private void subtractBalance(BigDecimal amonth){
+        this.balance = this.balance.subtract(amonth);
     }
 
 
