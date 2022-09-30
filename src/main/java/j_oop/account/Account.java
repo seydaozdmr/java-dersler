@@ -8,6 +8,13 @@ public class Account {
     private BigDecimal balance;
 
     //this account class delegates all transactions to account states
+    /**
+     * Eğer bir sınıf işlemleri kendisi yapmaya çalışıyorsa ve bu durum sırasında şartlara göre hareket ediyorsa
+     * bu şartlar sınıf için belirli durumlarda yönetilebilecek seviyede ise bu işleri durumlara delege etmek en mantıklısı.
+     * Örneğin bu hesap sınıfın hesabın dondurulmuş,kapalı,onaylanmamış hallerinde farklı davranışlar sergiliyor.
+     * Bu durumları sınıftan ayırıp her birinde nasıl davranacağını farklı sınıflar üzerinden ve tek bir arayüz aracığılığı
+     * ile yönetebiliriz.
+     */
     private AccountState accountState;
 
 
