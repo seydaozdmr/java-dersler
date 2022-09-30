@@ -5,13 +5,15 @@ import java.math.BigDecimal;
 public class Account {
     private boolean isVerified;
     private boolean isClosed;
-    private boolean isFrozen;
     private BigDecimal balance;
     private AccountUnFrozen onUnFrozen;
+    private EnsureUnfrozen ensureUnfrozen;
+
 
 
     public Account(AccountUnFrozen accountUnFrozen) {
         this.balance = BigDecimal.ZERO;
+        this.ensureUnfrozen = this::stayUnfrozen;
         this.onUnFrozen=accountUnFrozen;
     }
 
@@ -28,19 +30,14 @@ public class Account {
             return;
         if(!this.isVerified)
             return;
-        this.isFrozen=true;
+        this.ensureUnfrozen = this::unFreeze;
     }
 
     public void deposit(BigDecimal amount){
         if(this.isClosed)
             return;
-        if(this.isFrozen){
-            this.isFrozen = false;
-            this.onUnFrozen.handle();
-        }
+        this.ensureUnfrozen.execute();
         this.balance = this.balance.add(amount);
-
-
     }
 
     public void withdraw(BigDecimal amount){
@@ -48,19 +45,17 @@ public class Account {
             return;
         if(this.isClosed)
             return;
-        if(this.isFrozen){
-            this.isFrozen = false;
-            this.onUnFrozen.handle();
-        }
+        this.ensureUnfrozen.execute();
         this.balance = this.balance.subtract(amount);
     }
 
-    private void ensureUnFrozen(){
-        if(!this.isFrozen)
-            return;
-        this.isFrozen=false;
+    public void unFreeze(){
         this.onUnFrozen.handle();
+        this.ensureUnfrozen = this::stayUnfrozen;
+    }
 
+    private void stayUnfrozen(){
+        //this.isFrozen=true;
     }
 
 
