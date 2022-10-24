@@ -33,7 +33,7 @@ public class Money implements Comparable<Money>{
 
     @Override
     public int hashCode() {
-        return this.amount.hashCode() * 17 + this.currency.hashCode();
+        return this.amount.hashCode() * 29 + this.currency.hashCode();
     }
 
     @Override
