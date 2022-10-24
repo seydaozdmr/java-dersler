@@ -16,6 +16,7 @@ public class NotVerified implements AccountState {
 
     @Override
     public AccountState deposit(BigDecimal amount, Consumer<BigDecimal> addToBalance) {
+        //Hesaba para yatırmak için callback methodu çağırabiliriz.
         addToBalance.accept(amount);
         return this;
     }
