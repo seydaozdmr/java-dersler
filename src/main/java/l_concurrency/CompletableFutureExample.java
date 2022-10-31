@@ -19,6 +19,9 @@ public class CompletableFutureExample {
         };
 
         completableFuture.thenAcceptAsync(consumer);
+        completableFuture.thenRun(()->{
+            System.out.println("THEN RUNNED::");
+        });
         sleep(2000);
         Thread.currentThread().join();
     }
