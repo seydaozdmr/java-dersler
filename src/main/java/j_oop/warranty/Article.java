@@ -1,6 +1,9 @@
 package j_oop.warranty;
 
 public class Article {
+    /**
+     * Article nesnesi 2 adet garanti durumunu init edilirken constructor ına alıyor.
+     */
     private Warranty moneyBackWarranty;
     private Warranty expressWarranty;
 
@@ -27,6 +30,9 @@ public class Article {
     }
 
     public Article withVisibleDamage(){
+        /**
+         * Visible damage olduğunda para iade garantisi olmuyor.
+         */
         return new Article(Warranty.VOID,this.expressWarranty,this.effectiveExpressWarranty);
     }
 
