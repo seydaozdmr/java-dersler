@@ -21,12 +21,23 @@ public class CompositePainter implements Painter{
         this.scheduler=scheduler;
     }
 
+    /**
+     * Composite painter yaratılırken gelen listenin empty olup olmadığını boolean ile yönetmek yerine static of
+     * methodu ile Optional bir nesne dönebilir. Böylece if else yapısından kurtuluruz.
+     * @param painters
+     * @param scheduler
+     * @return
+     */
+
     public static Optional<CompositePainter> of(List<Painter> painters ,PaintingScheduler scheduler){
-        return painters.isEmpty() ? Optional.empty() : Optional.of(new CompositePainter(painters,scheduler));
+        return painters.isEmpty() ?
+                Optional.empty() :
+                Optional.of(new CompositePainter(painters,scheduler));
     }
 
     public Optional<Painter> available(){
-        return CompositePainter.of(Painter.stream(painters).available().collect(Collectors.toList()),new ConstantVelocityScheduler())
+        return CompositePainter.of(Painter.stream(painters).available().collect(Collectors.toList()),
+                        new ConstantVelocityScheduler())
                 .map(Function.identity());
     }
 

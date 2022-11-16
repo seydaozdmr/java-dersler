@@ -14,6 +14,12 @@ public class WorkAssignment {
         this.sqMeters = sqMeters;
     }
 
+    /**
+     * Painter'a WorkAssignment yapıldığında o painter'ın yapacağı işin hesaplamalarını bu sınıf üzerinden
+     * gerçekleştirebiliriz.
+     * @return
+     */
+
 
     public Money estimateCompensations(){
         return this.painter.estimateCompensation(this.sqMeters);
