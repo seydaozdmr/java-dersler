@@ -2,6 +2,7 @@ package j_oop.app.model;
 
 import c_stream.basics.collector.PartitioningExample;
 import j_oop.app.service.ConstantVelocityScheduler;
+import j_oop.app.service.PainterStream;
 import j_oop.app.service.PaintingScheduler;
 import j_oop.app.service.WorkStream;
 
@@ -36,25 +37,23 @@ public class CompositePainter implements Painter{
     }
 
     public Optional<Painter> available(){
-        return CompositePainter.of(Painter.stream(painters).available().collect(Collectors.toList()),
-                        new ConstantVelocityScheduler())
-                .map(Function.identity());
+        return this.painters()
+                .available()
+                .workTogether(this.scheduler);
     }
 
     @Override
     public Duration estimateTimeToPaint(double sqMeters) {
         return this.scheduler.schedule(this.painters,sqMeters)
-                .map(WorkAssignment::estimateTimeToPaint)
-                .max(Duration::compareTo)
-                .get();
+                .timesToPaint()
+                .maxOfMany();
     }
 
     @Override
     public Money estimateCompensation(double sqMeters) {
         return this.schedule(sqMeters)
-                .map(WorkAssignment::estimateCompensations)
-                .reduce(Money::add)
-                .orElse(Money.ZERO);
+                .compensations()
+                .sum();
     }
 
     private WorkStream schedule(double sqMeters){
@@ -76,6 +75,10 @@ public class CompositePainter implements Painter{
 
     private Stream<String> getPainterNames(){
         return Painter.stream(this.painters).map(Painter::getName);
+    }
+
+    private PainterStream painters(){
+        return Painter.stream(this.painters);
     }
 
     //gives area of work each painter

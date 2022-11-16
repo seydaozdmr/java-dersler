@@ -1,7 +1,10 @@
 package j_oop.app.model;
 
+import j_oop.app.service.MoneyStream;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.stream.Stream;
 
 public class Money implements Comparable<Money>{
 
@@ -24,6 +27,11 @@ public class Money implements Comparable<Money>{
         BigDecimal newAmount = this.getAmount().multiply(new BigDecimal(factor));
         return new Money(newAmount);
     }
+
+    public static MoneyStream stream(Stream<Money> moneys) {
+        return new MoneyStream(moneys);
+    }
+
 
     public Money add(Money other) {
         return new Money(this.getAmount().add(other.getAmount()));
