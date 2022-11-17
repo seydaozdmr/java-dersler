@@ -122,8 +122,14 @@ public class Basics_2 {
             for(int j=1;j<=10;j++){
                 System.out.print((i*j)+" ");
             }
+
             System.out.println();
         }
+        if(6>9)
+            System.out.println("ifade");
+            System.out.println("ifade");
+
+
 
 
 
