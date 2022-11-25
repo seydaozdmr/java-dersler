@@ -11,6 +11,16 @@ public class Demo {
 
         System.out.println(cs.getCredits());
         System.out.println(cs.getName());
+        hello();
+        int result = getVal();
+        System.out.println(result);
+    }
 
+    private static void hello(){
+        System.out.println("sadjlaşskd");
+    }
+
+    private static int getVal(){
+        return 10;
     }
 }
