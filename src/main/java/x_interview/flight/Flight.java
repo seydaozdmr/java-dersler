@@ -1,36 +1,44 @@
 package x_interview.flight;
 
-import x_interview.flight.state.NewState;
+import java.util.ArrayDeque;
 
 public class Flight implements Comparable<Flight> {
     private String flightCode;
-    private State state;
+    private int [] states;
+    private int currentState=0;
     private int admissionTime;
-    private int [] processTimes;
     private Airport landing;
     private Airport takeOff;
     private int totalFlight;
-    private int stateNumber;
+    private boolean isProcessing;
+    private FlightMode flightMode;
 
-    public Flight(String flightCode, int admissionTime, int[] processTimes, Airport landing, Airport takeOff) {
+    public Flight(String flightCode){
+        this.flightCode= flightCode;
+        this.states = new int[21];
+    }
+
+    public Flight(String flightCode, int admissionTime, Airport landing, Airport takeOff) {
         this.flightCode = flightCode;
+        this.states = new int[21];
         this.admissionTime = admissionTime;
-        this.processTimes = processTimes;
         this.landing = landing;
         this.takeOff = takeOff;
-        this.state=new NewState(null,0);
+        this.totalFlight = 0;
     }
 
-    public Flight() {
-        this.state=new NewState(null,0);
-    }
-
-
+    /**
+     * PriorityQueue'nun önceliği belirlemesi için iki koşul var
+     * birisi uçuşların ikisi de yeniyse uçuş kodlarından küçük olan öncelikli
+     * diğeri eğer diğer uçuş yeniyse öncelik ona ait.
+     * @param o the object to be compared.
+     * @return
+     */
     @Override
     public int compareTo(Flight o) {
-        if(!this.state.isProcessing() && !o.state.isProcessing())
+        if(!this.isProcessing && !o.isProcessing)
             return this.flightCode.compareTo(o.flightCode);
-        else if(this.state.isProcessing() && !o.state.isProcessing())
+        else if(this.isProcessing && !o.isProcessing)
             return -1;
         return 1;
     }
@@ -43,13 +51,6 @@ public class Flight implements Comparable<Flight> {
         this.flightCode = flightCode;
     }
 
-    public State getState() {
-        return state;
-    }
-
-    public void setState(State state) {
-        this.state = state;
-    }
 
     public int getAdmissionTime() {
         return admissionTime;
@@ -57,14 +58,6 @@ public class Flight implements Comparable<Flight> {
 
     public void setAdmissionTime(int admissionTime) {
         this.admissionTime = admissionTime;
-    }
-
-    public int[] getProcessTimes() {
-        return processTimes;
-    }
-
-    public void setProcessTimes(int[] processTimes) {
-        this.processTimes = processTimes;
     }
 
     public Airport getLanding() {
@@ -92,7 +85,65 @@ public class Flight implements Comparable<Flight> {
     }
 
 
-    public void start(){
-        this.state=this.state.start();
+    public void addDurationToTotalFlight(int duration) {
+        this.totalFlight+=duration;
+    }
+
+    public boolean isProcessing() {
+        return isProcessing;
+    }
+
+    public void setProcessing(boolean processing) {
+        isProcessing = processing;
+    }
+
+
+    public int getCurrentState(){ //current statein süresi
+        return this.states[currentState];
+    }
+
+    //Sıradaki state'e geçmek için-process bittiğinde sıraki state'e geçmeliyiz.
+    public void nextState(){
+        currentState++;
+    }
+
+    public void makeProcess(int duration) {
+        this.states[currentState] = this.states[currentState] - duration;
+    }
+
+    public void start() {
+        this.isProcessing = true;
+    }
+
+    public int stateNumber(){
+        return this.states.length;
+    }
+
+    public int[] getStates() {
+        return states;
+    }
+
+    public void setStates(int[] states) {
+        this.states = states;
+    }
+
+    public void setCurrentState(int currentState) {
+        this.currentState = currentState;
+    }
+
+    public FlightMode getFlightMode() {
+        return flightMode;
+    }
+
+    public void setFlightMode(FlightMode flightMode) {
+        this.flightMode = flightMode;
+    }
+
+    public void addState(int state){
+        this.states[currentState++] = state;
+    }
+
+    public enum FlightMode{
+        DEPARTURE,LANDING
     }
 }
