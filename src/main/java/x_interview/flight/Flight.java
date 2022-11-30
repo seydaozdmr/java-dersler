@@ -11,7 +11,6 @@ public class Flight implements Comparable<Flight> {
     private Airport takeOff;
     private int totalFlight;
     private boolean isProcessing;
-    private FlightMode flightMode;
 
     public Flight(String flightCode){
         this.flightCode= flightCode;
@@ -37,10 +36,10 @@ public class Flight implements Comparable<Flight> {
     @Override
     public int compareTo(Flight o) {
         if(!this.isProcessing && !o.isProcessing)
-            return this.flightCode.compareTo(o.flightCode);
+            return o.flightCode.compareTo(this.flightCode);
         else if(this.isProcessing && !o.isProcessing)
-            return -1;
-        return 1;
+            return 1;
+        return -1;
     }
 
     public String getFlightCode() {
@@ -108,7 +107,10 @@ public class Flight implements Comparable<Flight> {
     }
 
     public void makeProcess(int duration) {
+        //TODO burayı düzelt
         this.states[currentState] = this.states[currentState] - duration;
+        if(this.states[currentState]==0)
+            currentState++;
     }
 
     public void start() {
@@ -116,7 +118,7 @@ public class Flight implements Comparable<Flight> {
     }
 
     public int stateNumber(){
-        return this.states.length;
+        return this.currentState;
     }
 
     public int[] getStates() {
@@ -131,19 +133,9 @@ public class Flight implements Comparable<Flight> {
         this.currentState = currentState;
     }
 
-    public FlightMode getFlightMode() {
-        return flightMode;
-    }
-
-    public void setFlightMode(FlightMode flightMode) {
-        this.flightMode = flightMode;
-    }
-
     public void addState(int state){
         this.states[currentState++] = state;
     }
 
-    public enum FlightMode{
-        DEPARTURE,LANDING
-    }
+
 }

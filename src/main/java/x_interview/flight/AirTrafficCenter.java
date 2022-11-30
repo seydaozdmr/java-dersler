@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-public class AirTrafficCenter {
+public class AirTrafficCenter implements Runnable{
     private String code;
     private Airport airport;
     private Queue<Flight> readyQueue;
@@ -54,7 +54,7 @@ public class AirTrafficCenter {
     }
 
     public void addQueue(Flight flight){
-        this.readyQueue.offer(flight);
+        this.readyQueue.add(flight);
     }
 
     public void run(){
@@ -62,14 +62,16 @@ public class AirTrafficCenter {
             //7 kere state arttıracak ve her bir statein süresini uçağın toplam zamanına ekleyecek
             //bitince bu uçağı geriye acc kuyruğuna gönderecek
             Flight getFromQueue = this.readyQueue.poll();
+            if(getFromQueue!=null){
+                for(int i=0;i<7;i++){
+                    getFromQueue.addDurationToTotalFlight(getFromQueue.getCurrentState());
+                    getFromQueue.makeProcess(getFromQueue.getCurrentState());
+                }
 
-            for(int i=0;i<7;i++){
-                getFromQueue.addDurationToTotalFlight(getFromQueue.getCurrentState());
-                getFromQueue.nextState();
+                this.airport.getAreaControlCenter().addQueue(getFromQueue);
+                isFinished=true;
             }
-
-            this.airport.getAreaControlCenter().addQueue(getFromQueue);
-
         }
+        isFinished=false;
     }
 }

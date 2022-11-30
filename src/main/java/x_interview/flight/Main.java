@@ -26,6 +26,8 @@ public class Main {
                 for(int j=1;j<accAndAirports.length;j++){
                     Airport airport = new Airport(accAndAirports[j]);
                     areaControlCenter.addAirPort(airport);
+                    airport.setAreaControlCenter(areaControlCenter);
+                    airport.createAirTrafficCenter();
                 }
                 accs.add(areaControlCenter);
             }
@@ -65,11 +67,14 @@ public class Main {
                 areaControlCenter.addQueue(flight);
                 areaControlCenter.incFlightNumber();
             }
-
+            File outputFile = new File(args[1]);
+            outputFile.createNewFile();
+            PrintStream output = new PrintStream(outputFile);
             for(AreaControlCenter areaControlCenter:accs){
-                areaControlCenter.run();
+                String result = areaControlCenter.run();
+                output.println(result);
             }
-
+            output.close();
 
 
         } catch (FileNotFoundException e) {
