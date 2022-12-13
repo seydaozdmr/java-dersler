@@ -3,6 +3,8 @@ package i_date;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class WeekOfDays {
     public static void main(String[] args) {
@@ -16,6 +18,13 @@ public class WeekOfDays {
 
         System.out.println(requestStartDate);
         System.out.println(requestEndDate);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH.mm");
+
+        LocalTime today2 = LocalTime.now();
+
+        String timeString = today2.format(formatter);	//12.38
+
 
     }
 
