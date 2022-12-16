@@ -18,7 +18,7 @@ public class PonderingModuloAlgorithm implements ControlDigitAlgorithm {
             Function<StraightNumber,NumberStream> digitsExtractor,
             int divisor, int substitute, int...factors
     ){
-        return new PonderingModuloAlgorithm(digitsExtractor,factors,n->n.modulo(divisor).asDigitOr(substitute));
+        return new PonderingModuloAlgorithm(digitsExtractor,factors,(n)->n.modulo(divisor).asDigitOr(substitute));
     }
 
     public static ControlDigitAlgorithm singleDigitsModulo(
