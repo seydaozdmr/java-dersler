@@ -30,16 +30,19 @@ public class EqualsVsContains {
         String value = "123.123";
 
         System.out.println(value.replaceAll("[.,]",""));
-        String str = "asd%sdşsad sadl/: asd*_&%+^^";
+        String str = "asd%sdşsad sadl/: asd*_&%+^^.png";
         //str = str.replaceAll("[^a-zA-Z0-9]", "-");
         System.out.println(str);
 
-        String regex =  "[^a-zA-Z0-9]";
+        String regex =  "[^a-zA-Z0-9.]";
         Pattern pattern = Pattern.compile(regex);
         System.out.println(pattern.matcher(str).replaceAll("-"));
 
         LocalDateTime localDateTime= LocalDateTime.now();
         System.out.println(localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-YYYY-hh-mm-")));
 
+        String s = "https://google.com/sadasd?asdasd";
+        s = s.substring(s.lastIndexOf("/")+1,s.indexOf("?"));
+        System.out.println(s);
     }
 }
