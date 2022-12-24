@@ -10,5 +10,9 @@ public class Test {
         System.out.println(meyve1.name);
         System.out.println(meyve1.getName());
 
+        String fileName ="asd a ? *^ .^sd.)s/.jpg";
+        String output = fileName.replaceAll("[^\\w\\.]|\\s", "-");
+        System.out.println(output);
+
     }
 }

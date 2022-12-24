@@ -44,5 +44,14 @@ public class EqualsVsContains {
         String s = "https://google.com/sadasd?asdasd";
         s = s.substring(s.lastIndexOf("/")+1,s.indexOf("?"));
         System.out.println(s);
+        char ch =65;
+        System.out.println(ch);
+        int r=1232;
+        byte b = (byte)r;
+        System.out.println(b);
+
+        byte bd = 50;
+        bd = (byte) (bd * 2);
+        System.out.println(bd>>0);
     }
 }
