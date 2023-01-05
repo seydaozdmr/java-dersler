@@ -1,5 +1,7 @@
 package a_collections.splitMap;
 
+import com.google.common.base.Functions;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -31,6 +33,15 @@ public class PartitionHashMap {
         Map<String,Integer> result = name.stream()
                 .collect(Collectors.toMap(Function.identity(),e->1,Integer::sum));
         System.out.println(result);
+
+        String input = "AdasdfKasdhkjahfHASDFHfjfj";
+
+        Map<Character,Long> result2 = input.chars()
+                .mapToObj(c->(char)c)
+                .collect(Collectors.groupingBy(e->e,Collectors.counting()));
+
+
+        System.out.println(result2);
 
     }
 
