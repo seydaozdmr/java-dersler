@@ -37,44 +37,49 @@ public class FileReader {
                 if(elms.length>1){
                     //System.out.println(elms[4]);
                     String id=elms[0];
-                    if(id!=null)
-                        id=id.substring(4);
-                    //System.out.println(id);
-                    analytic.merge(id,1,Integer::sum);
+                    if(count==5758){
+                        System.out.println(id.substring(4));
+                    }
+                    count++;
+
+//                    if(id!=null)
+//                        id=id.substring(4);
+//                    //System.out.println(id);
+//                    analytic.merge(id,1,Integer::sum);
                 }
             }
             //null olan değerlere bak?
-            for(String[] elms:dtos){
-                if(elms.length>1){
-                    //System.out.println(elms[5]);
-                    String id=elms[5];
-                    String result="";
-                    if(id.contains("signalContent") && id!=null){
-                        result=id.substring(14,id.length()-1);
-                        if(result.length()==0)
-                            System.out.println(id);
-                    }
-
-                    //System.out.println(id);
-
-                }
-            }
-
-            //System.out.println(analytic);
-            int duplicateCounter=0;
-            for(Map.Entry<String,Integer> e:analytic.entrySet()){
-                if(e.getValue()>1){
-                    System.out.println(e);
-                    duplicateCounter++;
-                }
-            }
-
-            System.out.println("tekrar eden sinyal sayısı : "+duplicateCounter);
-
-            List<String> result = findSignal(dtos,"16396");
-            for (String signal:result){
-                System.out.println(signal);
-            }
+//            for(String[] elms:dtos){
+//                if(elms.length>1){
+//                    //System.out.println(elms[5]);
+//                    String id=elms[5];
+//                    String result="";
+//                    if(id.contains("signalContent") && id!=null){
+//                        result=id.substring(14,id.length()-1);
+//                        if(result.length()==0)
+//                            System.out.println(id);
+//                    }
+//
+//                    //System.out.println(id);
+//
+//                }
+//            }
+//
+//            //System.out.println(analytic);
+//            int duplicateCounter=0;
+//            for(Map.Entry<String,Integer> e:analytic.entrySet()){
+//                if(e.getValue()>1){
+//                    System.out.println(e);
+//                    duplicateCounter++;
+//                }
+//            }
+//
+//            System.out.println("tekrar eden sinyal sayısı : "+duplicateCounter);
+//
+//            List<String> result = findSignal(dtos,"16396");
+//            for (String signal:result){
+//                System.out.println(signal);
+//            }
         }catch (IOException e){
             e.printStackTrace();
         }
