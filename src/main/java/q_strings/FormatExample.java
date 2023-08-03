@@ -11,5 +11,16 @@ public class FormatExample {
 
         String replaceResult = CONTENT.replace("{x}",city1).replace("{y}",city2);
         System.out.println(replaceResult);
+
+
+        String url = "";
+//        url=url.substring(url.indexOf("asd")-1);
+//        System.out.println(url);
+
+        url = "/deneme/hobi-oyun/dijital-urunler/deneme-urun";
+
+        String[] parts = url.split("deneme\\.com\\.tr", 2);
+
+        String path = parts[parts.length - 1];
     }
 }
